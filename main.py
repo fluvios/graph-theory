@@ -31,10 +31,13 @@ with open("datasets/edges.csv", "r") as f:
 # Cluster
 # sc = SpectralClustering(2, affinity='precomputed', n_init=100)
 # sc.fit(adj_mat)
-(edgecuts, parts) = metis.part_graph(G, 3)
-colors = ['red','blue','green']
+(edgecuts, parts) = metis.part_graph(G, 5)
+colors = ['red','blue','green', 'yellow', 'black']
+color_map = []
 for i, p in enumerate(parts):
+    print(i, " ", p)
     G.node[i]['color'] = colors[p]
+    color_map.append(colors[p])
 
 # Compare ground-truth and clustering-results
 # print('spectral clustering')
@@ -44,7 +47,7 @@ for i, p in enumerate(parts):
 
 # Drawing Code
 pos = nx.get_node_attributes(G, 'pos')
-nx.draw_networkx_nodes(G, pos, node_size=50)
+nx.draw_networkx_nodes(G, pos, node_size=50, node_color=color_map)
 # nx.draw_networkx_labels(G, pos, font_size=20, font_color='white', font_family='sans-serif')
 # plt.savefig("graph.png")
 plt.show()
